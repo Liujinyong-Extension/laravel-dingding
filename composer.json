@@ -1,0 +1,16 @@
+{
+    "name": "liujinyong/laravel-dingding",
+    "description": "基于钉钉开放平台的laravel-php-api集成",
+    "autoload": {
+        "psr-4": {
+            "Liujinyong\\LaravelDingding\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "KingCard",
+            "email": "893296814@qq.com"
+        }
+    ],
+    "require": {}
+}
