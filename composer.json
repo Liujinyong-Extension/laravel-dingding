@@ -12,5 +12,8 @@
             "email": "893296814@qq.com"
         }
     ],
-    "require": {}
+    "require": {
+      "php": "^8.2",
+      "guzzlehttp/guzzle": "7.9.2"
+    }
 }

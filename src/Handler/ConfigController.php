@@ -2,36 +2,57 @@
 
 namespace Liujinyong\LaravelDingding\Handler;
 
-use Liujinyong\LaravelDingding\Exceptions\ParamMissingException;
-
 class ConfigController
 {
+    /**
+     * @var null 实例化对象
+     */
     private static $instance = null;
-
+    /**
+     * @var string|null appkey
+     */
     private $client_id = null;
+    /**
+     * @var string|null  appsecret
+     */
     private $client_secret = null;
+    /**
+     * @var string|null agentID
+     */
     private $agent_id = null;
+
+    /**
+     * @param $ClientId string
+     * @param $ClientSecret string
+     * @param $AgentId string
+     */
     private function __construct($ClientId = null, $ClientSecret = null,$AgentId = null){
-
-        if(!$ClientId || !$ClientSecret || !$AgentId){
-            return new ParamMissingException("参数缺失了哦");
-        }
-
         $this->client_id = $ClientId;
         $this->client_secret = $ClientSecret;
         $this->agent_id = $AgentId;
     }
+
+    /**
+     * @param $ClientId
+     * @param $ClientSecret
+     * @param $AgentId
+     * @return self|null
+     */
     public static function getInstance($ClientId, $ClientSecret,$AgentId){
         if (self::$instance == null) {
             self::$instance =  new self($ClientId, $ClientSecret,$AgentId);
         }
         return self::$instance;
     }
+
+    /**
+     * @param $attribute string 获取属性
+     * @return mixed
+     */
     public function getAttribute($attribute){
         return $this->$attribute;
     }
     private function __clone() {}
-    private function __wakeup() {}
 
 
 }
