@@ -90,7 +90,6 @@ class MessageController extends HandlerController
             throw new SystemWrongException($e->getMessage(), $e->getCode());
         }
         $res = json_decode($res->getBody()->getContents(), true);
-var_dump($res);die();
         if ($res['errcode'] != 0) {
             throw new SystemWrongException($res['errmsg'], $res['errcode']);
         }
