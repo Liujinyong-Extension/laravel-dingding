@@ -15,6 +15,12 @@ class MessageController extends HandlerController
      */
     private $worknotificationUrl = 'https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2';
 
+    /**
+     * @var string 获取工作通知的结果
+     * https://open.dingtalk.com/document/development/gets-the-result-of-sending-messages-asynchronously-to-the-enterprise
+     */
+    private $getnotificationresultUrl = 'https://oapi.dingtalk.com/topapi/message/corpconversation/getsendresult';
+
 
     /**
      *  发送工作消息通知
@@ -58,5 +64,36 @@ class MessageController extends HandlerController
         }
         return $res;
 
+    }
+
+    /**
+     * @param $taskId
+     * @return mixed
+     * @throws GuzzleException
+     * @throws ParamMissingException
+     * @throws SystemWrongException
+     * 获取工作通知消息的发送结果
+     */
+    public function getNotificationResult($taskId = "")
+    {
+        $token = $this->getAccessToken();
+        $jsonData = [];
+        if ( $taskId == "") {
+            throw new ParamMissingException("task_id不能全为空");
+        }
+
+        $jsonData['agent_id'] = $this->configInstance->getAttribute('agent_id');
+        $jsonData['task_id'] = trim($taskId);
+        try {
+            $res = $this->httpClient->post($this->getnotificationresultUrl . '?access_token=' . $token, ['json' => $jsonData]);
+        } catch (\Exception $e) {
+            throw new SystemWrongException($e->getMessage(), $e->getCode());
+        }
+        $res = json_decode($res->getBody()->getContents(), true);
+var_dump($res);die();
+        if ($res['errcode'] != 0) {
+            throw new SystemWrongException($res['errmsg'], $res['errcode']);
+        }
+        return $res;
     }
 }
