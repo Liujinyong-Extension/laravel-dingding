@@ -7,7 +7,6 @@ use Liujinyong\LaravelDingding\Exceptions\SystemWrongException;
 
 class HandlerController
 {
-    public $configInstance = null;
 
     public $httpClient = null;
 
@@ -49,7 +48,6 @@ class HandlerController
             }
 
         }
-        var_dump($accessTokenKey);die();
         return $this->{$accessTokenKey};
     }
 }
