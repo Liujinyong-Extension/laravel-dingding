@@ -35,7 +35,7 @@ class HandlerController
         $expiresKey     = "expires_" . $params['appkey'];
         $accessTokenKey = "accessToken_" . $params['appkey'];
 
-        if (time() > $this->{$expiresKey}) {
+        if (!isset($this->{$expiresKey}) || time() > $this->{$expiresKey}) {
             $queryStr = http_build_query($params);
             $response = $this->httpClient->get($this->gettokenUrl . '?' . $queryStr);
             $response = json_decode($response->getBody()->getContents(), true);
